@@ -1,3 +1,5 @@
+$s="GlossID	Gloss	Subgroup	Language	Word	MultistateCode
+
 1	above	Thura-Yura	Adnyamathanha	arra	14
 1	above	Paman	AghuTharrnggala		0
 1	above	Paman	Alngith		0
@@ -30,7 +32,7 @@
 1	above	Kartu	ChampionBay		0
 1	above	Kulin	Colac		0
 1	above	Durubulic	Coobenpil		0
-1	above	Dyirbalic	Coonambella	been dal; "ooba"	71
+1	above	Dyirbalic	Coonambella	been dal; 'ooba'	71
 1	above	Karnic	CoopersCreek		0
 1	above	Waka-Kabi	Dalla		0
 1	above	Yuin-Kuri	Darkinyung		0
@@ -2139,7 +2141,7 @@
 7	armpit	Warumungic	Warumungu	ŋak:umpulya	4
 7	armpit	Maric	Warungu	ŋamur	31
 7	armpit	Kulin	Wathawurrung	karram	27
-7	armpit	Kulin	Wathiwathi	w\ongi	30
+7	armpit	Kulin	Wathiwathi	w/ongi	30
 7	armpit	Nyungar	Watjuk	wardang	53
 7	armpit	Lower Murray	Wellington		0
 7	armpit	Kulin	WembaWemba	kathap	77
@@ -2214,7 +2216,7 @@
 8	ashes	Kartu	ChampionBay		0
 8	ashes	Kulin	Colac		0
 8	ashes	Durubulic	Coobenpil		0
-8	ashes	Dyirbalic	Coonambella	a'rone; "cam'bara abigh'ee"	94
+8	ashes	Dyirbalic	Coonambella	a'rone; 'cam'bara abigh'ee'	94
 8	ashes	Karnic	CoopersCreek	turrpa	25
 8	ashes	Waka-Kabi	Dalla		0
 8	ashes	Yuin-Kuri	Darkinyung		0
@@ -2949,7 +2951,7 @@
 11	bad	Wati	MartuWangka	walyku	8
 11	bad	Ngayarta	Martuthunira	waci	10
 11	bad	Waka-Kabi	MaryRiverandBunyaBunyaCountry	wa’raN	35
-11	bad	Kulin	MathiMathi	chel\egan	76
+11	bad	Kulin	MathiMathi	chel/egan	76
 11	bad	Mayi	MayiKulan	mathi	12
 11	bad	Mayi	MayiKutuna	murta	49
 11	bad	Mayi	MayiThakurti	mattee	12
@@ -3157,7 +3159,7 @@
 12	belly	Maric	Dharawala	pandyurd	97
 12	belly	Yuin-Kuri	Dharuk	bindi	30
 12	belly	Maric	Dharumbal	kuana	55
-12	belly	Yolngu	Dhayyi	\pnoun	18
+12	belly	Yolngu	Dhayyi	/pnoun	18
 12	belly	Yuin-Kuri	Dhudhuroa	yanaru	41
 12	belly	Yuin-Kuri	Dhurga	bindhi	30
 12	belly	Yolngu	Dhuwal	wuwa'	17
@@ -3599,7 +3601,7 @@
 13	below	Wati	Ngaanyatjarra		0
 13	below	Mirniny	Ngadjumaya	yaburru	6
 13	below	Thura-Yura	Ngadjuri		0
-13	below	Lower Murray	Ngaiawang	p@e@eko	67
+13	below	Lower Murray	Ngaiawang	paeaeko	67
 13	below	Karnic	Ngamini	ŋarini	15
 13	below	Ngumpin-Yapa	Ngardily	kaniny	3
 13	below	Yuin-Kuri	Ngarigu	nyulung	54
@@ -5586,7 +5588,7 @@
 19	blow	Yardli	Yardliyawarra		0
 19	blow	Karnic	Yarluyandi	pulka-	15
 19	blow	Karnic	Yawarrawarrka	naramunko	49
-19	blow	Gumbaynggiric	Yaygirr	yuwi:	
+19	blow	Gumbaynggiric	Yaygirr	yuwi:
 19	blow	Paman	Yidiny	biya	1
 19	blow	Ngayarta	Yindjibarndi	birdulhu-gu	5
 19	blow	Warluwaric	Yindjilandji		0
@@ -6879,7 +6881,7 @@
 25	breast	Kartu	ChampionBay	pitpu	83
 25	breast	Kulin	Colac	ber re gnen nok (tu)	60
 25	breast	Durubulic	Coobenpil	amu	1
-25	breast	Dyirbalic	Coonambella	moo'thee ("n'gha'moon" "brats")	50
+25	breast	Dyirbalic	Coonambella	moo'thee ('n'gha'moon' 'brats')	50
 25	breast	Karnic	CoopersCreek	[ŋ]ama	1
 25	breast	Waka-Kabi	Dalla	amoo	1
 25	breast	Yuin-Kuri	Darkinyung	ngabbang	21
@@ -12166,7 +12168,7 @@
 45	dog	Kartu	ChampionBay	Hotther	7
 45	dog	Kulin	Colac	ngantu	60
 45	dog	Durubulic	Coobenpil		0
-45	dog	Dyirbalic	Coonambella	oh'yo "dandy"	87
+45	dog	Dyirbalic	Coonambella	oh'yo 'dandy'	87
 45	dog	Karnic	CoopersCreek	pandi	26
 45	dog	Waka-Kabi	Dalla	kallangoor (see Good)	75
 45	dog	Yuin-Kuri	Darkinyung	mirri	19
@@ -12402,7 +12404,7 @@
 45	dog	Warumungic	Warumungu	kunapa	5
 45	dog	Maric	Warungu	wumpal	50
 45	dog	Kulin	Wathawurrung	ka(:)l	15
-45	dog	Kulin	Wathiwathi	wir\angen	45
+45	dog	Kulin	Wathiwathi	wir/angen	45
 45	dog	Nyungar	Watjuk	durda	18
 45	dog	Lower Murray	Wellington	merrie	19
 45	dog	Kulin	WembaWemba	kali	15
@@ -13983,7 +13985,7 @@
 50	dust	Yardli	Yardliyawarra	milyaru ?	73
 50	dust	Karnic	Yarluyandi		0
 50	dust	Karnic	Yawarrawarrka	puturu	44
-50	dust	Gumbaynggiric	Yaygirr	yu:pam	
+50	dust	Gumbaynggiric	Yaygirr	yu:pam
 50	dust	Paman	Yidiny	purapura	57
 50	dust	Ngayarta	Yindjibarndi	jurduu	10
 50	dust	Warluwaric	Yindjilandji		0
@@ -15201,7 +15203,7 @@
 54	egg	Warumungic	Warumungu	mula	14
 54	egg	Maric	Warungu	kukuji	46
 54	egg	Kulin	Wathawurrung	tayn	27
-54	egg	Kulin	Wathiwathi	m\irkoo	39
+54	egg	Kulin	Wathiwathi	m/irkoo	39
 54	egg	Nyungar	Watjuk	noorago	92
 54	egg	Lower Murray	Wellington	kubboga	9
 54	egg	Kulin	WembaWemba	merkook	60
@@ -17067,7 +17069,7 @@
 60	father	Warumungic	Warumungu	kampatyu	11
 60	father	Maric	Warungu	kaya	39
 60	father	Kulin	Wathawurrung	gurrau	27
-60	father	Kulin	Wathiwathi	m\amoo	6
+60	father	Kulin	Wathiwathi	m/amoo	6
 60	father	Nyungar	Watjuk	mamman	6
 60	father	Lower Murray	Wellington	papi	7
 60	father	Kulin	WembaWemba	mam	6
@@ -18311,7 +18313,7 @@
 64	fish	Warumungic	Warumungu	liwanya	13
 64	fish	Maric	Warungu	win.kar	58
 64	fish	Kulin	Wathawurrung	wirrapiyn	29
-64	fish	Kulin	Wathiwathi	m\unchi	73
+64	fish	Kulin	Wathiwathi	m/unchi	73
 64	fish	Nyungar	Watjuk	pii	34
 64	fish	Lower Murray	Wellington	gooeya	12
 64	fish	Kulin	WembaWemba	pongill	18
@@ -21288,7 +21290,7 @@
 78	hear	Paman	Linngithigh	nganya-y	58
 78	hear	unknown	LowerBurdekin		0
 78	hear	Western Torres	Mabuiag	kareŋemi	10
-78	hear	Kartu	Malgana	wutura (?mikht pe "heat")	2
+78	hear	Kartu	Malgana	wutura (?mikht pe 'heat')	2
 78	hear	Ngumpin-Yapa	Malngin	raŋka ŋanana	37
 78	hear	Yardli	Malyangapa	ŋaRa-	14
 78	hear	Marrngu	MangalaMcK	pina-ma	5
@@ -22570,7 +22572,7 @@
 82	hold	Wati	Ngaanyatjarra	manci	7
 82	hold	Mirniny	Ngadjumaya		0
 82	hold	Thura-Yura	Ngadjuri		0
-82	hold	Lower Murray	Ngaiawang	tumm@un	2
+82	hold	Lower Murray	Ngaiawang	tummaun	2
 82	hold	Karnic	Ngamini	patana	17
 82	hold	Ngumpin-Yapa	Ngardily		0
 82	hold	Yuin-Kuri	Ngarigu		0
@@ -24436,7 +24438,7 @@
 90	kangaroo	Wati	Ngaanyatjarra	marlu, kurlpirr(pa)	10
 90	kangaroo	Mirniny	Ngadjumaya	jawarda	8
 90	kangaroo	Thura-Yura	Ngadjuri	gudla	15
-90	kangaroo	Lower Murray	Ngaiawang	ng@a@ako	65
+90	kangaroo	Lower Murray	Ngaiawang	ngaaaako	65
 90	kangaroo	Karnic	Ngamini	tyukuru	37
 90	kangaroo	Ngumpin-Yapa	Ngardily	parntarrngarna	130
 90	kangaroo	Yuin-Kuri	Ngarigu	baru	2
@@ -27667,7 +27669,7 @@
 101	liver	Yardli	Yardliyawarra		0
 101	liver	Karnic	Yarluyandi		0
 101	liver	Karnic	Yawarrawarrka	kadlu	20
-101	liver	Gumbaynggiric	Yaygirr	umpakil	
+101	liver	Gumbaynggiric	Yaygirr	umpakil
 101	liver	Paman	Yidiny	gumbugara	45
 101	liver	Ngayarta	Yindjibarndi	ngamarri	6
 101	liver	Warluwaric	Yindjilandji	malampa	13
@@ -27978,7 +27980,7 @@
 102	long	Yardli	Yardliyawarra		0
 102	long	Karnic	Yarluyandi	parra-parra	56
 102	long	Karnic	Yawarrawarrka	yuri	43
-102	long	Gumbaynggiric	Yaygirr	yurrikwaŋ	
+102	long	Gumbaynggiric	Yaygirr	yurrikwaŋ
 102	long	Paman	Yidiny	gurran	1
 102	long	Ngayarta	Yindjibarndi	winbiri	10
 102	long	Warluwaric	Yindjilandji	tyutaŋi	78
@@ -28168,7 +28170,7 @@
 103	louse	Wati	Ngaanyatjarra	tjirtu	6
 103	louse	Mirniny	Ngadjumaya	wilya (FR)	8
 103	louse	Thura-Yura	Ngadjuri	gudlu	5
-103	louse	Lower Murray	Ngaiawang	p@a@anko	50
+103	louse	Lower Murray	Ngaiawang	paaaanko	50
 103	louse	Karnic	Ngamini	kata	17
 103	louse	Ngumpin-Yapa	Ngardily		0
 103	louse	Yuin-Kuri	Ngarigu	kadyi	46
@@ -28885,7 +28887,7 @@
 105	man	Warumungic	Warumungu	kartti	105
 105	man	Maric	Warungu	kayarra	51
 105	man	Kulin	Wathawurrung	warringgurr tanu	79
-105	man	Kulin	Wathiwathi	k\olkroon	89
+105	man	Kulin	Wathiwathi	k/olkroon	89
 105	man	Nyungar	Watjuk	kolemanti	54
 105	man	Lower Murray	Wellington		0
 105	man	Kulin	WembaWemba	wuthu	43
@@ -29215,7 +29217,7 @@
 106	meat	Maric	Yambina	tyne-gee-rah	77
 106	meat	Yolngu	Yannhangu	däŋgu	13
 106	meat	Karnic fringe	Yanda	kathi	22
-106	meat	Karnic	Yandruwandha	"kathi, palgupalgu"	22
+106	meat	Karnic	Yandruwandha	'kathi, palgupalgu'	22
 106	meat	Tangkic	Yangarella		0
 106	meat	Tangkic	Yangkaal	wurdalji 	93
 106	meat	Warluwaric	Yanyuwa	lhawarramantharra	53
@@ -29818,7 +29820,7 @@
 108	mosquito	Warumungic	Warumungu	pangkkula	13
 108	mosquito	Maric	Warungu	guyguy	58
 108	mosquito	Kulin	Wathawurrung	nguya-nguya	27
-108	mosquito	Kulin	Wathiwathi	m\o\ontchi	88
+108	mosquito	Kulin	Wathiwathi	m/o/ontchi	88
 108	mosquito	Nyungar	Watjuk	nido	50
 108	mosquito	Lower Murray	Wellington	mukan	55
 108	mosquito	Kulin	WembaWemba	lawi	104
@@ -30440,7 +30442,7 @@
 110	mouth	Warumungic	Warumungu	jala	10
 110	mouth	Maric	Warungu	jawa	3
 110	mouth	Kulin	Wathawurrung	wurru	23
-110	mouth	Kulin	Wathiwathi	wor\ogna	23
+110	mouth	Kulin	Wathiwathi	wor/ogna	23
 110	mouth	Nyungar	Watjuk	dawar	3
 110	mouth	Lower Murray	Wellington	yirang	4
 110	mouth	Kulin	WembaWemba	wurru	23
@@ -30656,7 +30658,7 @@
 111	name	Wati	Ngaanyatjarra	manytyi, yini	3
 111	name	Mirniny	Ngadjumaya	kulli	5
 111	name	Thura-Yura	Ngadjuri		0
-111	name	Lower Murray	Ngaiawang	y@a@ako	19
+111	name	Lower Murray	Ngaiawang	yaaaako	19
 111	name	Karnic	Ngamini	pilaya	30
 111	name	Ngumpin-Yapa	Ngardily	yirdi	16
 111	name	Yuin-Kuri	Ngarigu		0
@@ -30777,7 +30779,7 @@
 111	name	Yardli	Yardliyawarra		0
 111	name	Karnic	Yarluyandi	waŋka	40
 111	name	Karnic	Yawarrawarrka	drikindri	39
-111	name	Gumbaynggiric	Yaygirr	wa:mparr	
+111	name	Gumbaynggiric	Yaygirr	wa:mparr
 111	name	Paman	Yidiny	dirra	47
 111	name	Ngayarta	Yindjibarndi	yini	3
 111	name	Warluwaric	Yindjilandji	yini	3
@@ -33265,7 +33267,7 @@
 119	old	Yardli	Yardliyawarra		0
 119	old	Karnic	Yarluyandi	kakarru	45
 119	old	Karnic	Yawarrawarrka	womala	62
-119	old	Gumbaynggiric	Yaygirr	ŋuluŋkiny	
+119	old	Gumbaynggiric	Yaygirr	ŋuluŋkiny
 119	old	Paman	Yidiny	galgar	129
 119	old	Ngayarta	Yindjibarndi	juju	9
 119	old	Warluwaric	Yindjilandji	pukari	122
@@ -33455,7 +33457,7 @@
 120	one	Wati	Ngaanyatjarra	kutyu, kumpinyu	7
 120	one	Mirniny	Ngadjumaya	ka_ianu	10
 120	one	Thura-Yura	Ngadjuri		0
-120	one	Lower Murray	Ngaiawang	m@etat:a	56
+120	one	Lower Murray	Ngaiawang	maetat:a	56
 120	one	Karnic	Ngamini	ŋunara	63
 120	one	Ngumpin-Yapa	Ngardily	yangi	23
 120	one	Yuin-Kuri	Ngarigu	middang	32
@@ -33550,7 +33552,7 @@
 120	one	Warumungic	Warumungu	yarnti	21
 120	one	Maric	Warungu	nyun.kul	62
 120	one	Kulin	Wathawurrung	kuinmoyt	28
-120	one	Kulin	Wathiwathi	k\yup or yoori	51
+120	one	Kulin	Wathiwathi	k/yup or yoori	51
 120	one	Nyungar	Watjuk	kain	10
 120	one	Lower Murray	Wellington	oonboyie	109
 120	one	Kulin	WembaWemba	kepin	51
@@ -34198,7 +34200,7 @@
 122	other	Yardli	Yardliyawarra	yantyara	46
 122	other	Karnic	Yarluyandi		0
 122	other	Karnic	Yawarrawarrka	kulno	58
-122	other	Gumbaynggiric	Yaygirr	yanu	
+122	other	Gumbaynggiric	Yaygirr	yanu
 122	other	Paman	Yidiny	warubi	77
 122	other	Ngayarta	Yindjibarndi	gunjirri, wandurra, wirru	4
 122	other	Warluwaric	Yindjilandji		0
@@ -34483,7 +34485,7 @@
 123	person	Warumungic	Warumungu	kartti	15
 123	person	Maric	Warungu	mari	30
 123	person	Kulin	Wathawurrung	mirr-bang	75
-123	person	Kulin	Wathiwathi	p\ola k\yup w\o\otcha	98
+123	person	Kulin	Wathiwathi	p/ola k/yup w/o/otcha	98
 123	person	Nyungar	Watjuk	yungar	18
 123	person	Lower Murray	Wellington	puwi	70
 123	person	Kulin	WembaWemba	peng	94
@@ -35131,7 +35133,7 @@
 126	red	Yardli	Yardliyawarra		0
 126	red	Karnic	Yarluyandi	pityirina	6
 126	red	Karnic	Yawarrawarrka	pidipidi	27
-126	red	Gumbaynggiric	Yaygirr	mulurr-mulurr	
+126	red	Gumbaynggiric	Yaygirr	mulurr-mulurr
 126	red	Paman	Yidiny	wubagar	80
 126	red	Ngayarta	Yindjibarndi	mardamarda	7
 126	red	Warluwaric	Yindjilandji	wumaŋku	79
@@ -36064,7 +36066,7 @@
 129	root	Yardli	Yardliyawarra		0
 129	root	Karnic	Yarluyandi		0
 129	root	Karnic	Yawarrawarrka	wiŋiwiŋiri	46
-129	root	Gumbaynggiric	Yaygirr	wayan	
+129	root	Gumbaynggiric	Yaygirr	wayan
 129	root	Paman	Yidiny	tyulu	80
 129	root	Ngayarta	Yindjibarndi		0
 129	root	Warluwaric	Yindjilandji		0
@@ -37187,7 +37189,7 @@
 133	say	Wati	Ngaanyatjarra	watyalku	5
 133	say	Mirniny	Ngadjumaya		0
 133	say	Thura-Yura	Ngadjuri		0
-133	say	Lower Murray	Ngaiawang	kap:un; kapt@un	53
+133	say	Lower Murray	Ngaiawang	kap:un; kaptaun	53
 133	say	Karnic	Ngamini	yata	23
 133	say	Ngumpin-Yapa	Ngardily		0
 133	say	Yuin-Kuri	Ngarigu	bayalanga	35
@@ -37809,7 +37811,7 @@
 135	see	Wati	Ngaanyatjarra	nyaku, tyaraŋkanku	7
 135	see	Mirniny	Ngadjumaya	naŋu-	7
 135	see	Thura-Yura	Ngadjuri	nakuka'idla	7
-135	see	Lower Murray	Ngaiawang	n@a@an	7
+135	see	Lower Murray	Ngaiawang	naaaan	7
 135	see	Karnic	Ngamini	kariyawu	7
 135	see	Ngumpin-Yapa	Ngardily		0
 135	see	Yuin-Kuri	Ngarigu	dununag	46
@@ -38552,7 +38554,7 @@
 138	short	Yardli	Yardliyawarra		0
 138	short	Karnic	Yarluyandi	wardu-wardu	35
 138	short	Karnic	Yawarrawarrka	ŋubu	57
-138	short	Gumbaynggiric	Yaygirr	yarika	
+138	short	Gumbaynggiric	Yaygirr	yarika
 138	short	Paman	Yidiny	guwiy 	95
 138	short	Ngayarta	Yindjibarndi	guda	10
 138	short	Warluwaric	Yindjilandji		0
@@ -38863,7 +38865,7 @@
 139	shoulder	Yardli	Yardliyawarra	pilpi	19
 139	shoulder	Karnic	Yarluyandi	thiŋkarla	61
 139	shoulder	Karnic	Yawarrawarrka	tapini	60
-139	shoulder	Gumbaynggiric	Yaygirr	wa:karrata	
+139	shoulder	Gumbaynggiric	Yaygirr	wa:karrata
 139	shoulder	Paman	Yidiny	binda	56
 139	shoulder	Ngayarta	Yindjibarndi	barraa	4
 139	shoulder	Warluwaric	Yindjilandji		0
@@ -39796,7 +39798,7 @@
 142	skin	Yardli	Yardliyawarra	paltha	12
 142	skin	Karnic	Yarluyandi	pityurla	24
 142	skin	Karnic	Yawarrawarrka	tala	40
-142	skin	Gumbaynggiric	Yaygirr	yuru:mpiny	
+142	skin	Gumbaynggiric	Yaygirr	yuru:mpiny
 142	skin	Paman	Yidiny	guga	5
 142	skin	Ngayarta	Yindjibarndi	gawurn	6
 142	skin	Warluwaric	Yindjilandji		0
@@ -41325,7 +41327,7 @@
 147	snake	Warumungic	Warumungu	yurk:urlu	21
 147	snake	Maric	Warungu	jampal	62
 147	snake	Kulin	Wathawurrung	kurn-mil	33
-147	snake	Kulin	Wathiwathi	k\ani	37
+147	snake	Kulin	Wathiwathi	k/ani	37
 147	snake	Nyungar	Watjuk	waugal	16
 147	snake	Lower Murray	Wellington	durong	1
 147	snake	Kulin	WembaWemba	koormiwill	33
@@ -41547,7 +41549,7 @@
 148	smell (tr/intr)	Yuin-Kuri	Ngarigu		0
 148	smell (tr/intr)	Ngumpin-Yapa	Ngarinyman	ŋapuk mana	9
 148	smell (tr/intr)	Ngayarta	Ngarla	pulyarr man	46
-148	smell (tr/intr)	Ngayarta	Ngarluma	bund\ilgo	3
+148	smell (tr/intr)	Ngayarta	Ngarluma	bund/ilgo	3
 148	smell (tr/intr)	Lower Murray	Ngarrindjeri	peindi	3
 148	smell (tr/intr)	Mayi	Ngawun	nhuma	5
 148	smell (tr/intr)	Paman	Nggoth		0
@@ -44468,7 +44470,7 @@
 158	steal	Yardli	Yardliyawarra		0
 158	steal	Karnic	Yarluyandi	kurundu mani-	38
 158	steal	Karnic	Yawarrawarrka	kiŋilimandrindri	37
-158	steal	Gumbaynggiric	Yaygirr	uyu:parra	
+158	steal	Gumbaynggiric	Yaygirr	uyu:parra
 158	steal	Paman	Yidiny		0
 158	steal	Ngayarta	Yindjibarndi	muya-gu	4
 158	steal	Warluwaric	Yindjilandji	munukarityiri	48
@@ -45280,7 +45282,7 @@
 161	suck	Wati	Ngaanyatjarra	ku:nyca	8
 161	suck	Mirniny	Ngadjumaya		0
 161	suck	Thura-Yura	Ngadjuri		0
-161	suck	Lower Murray	Ngaiawang	m@o@ornun	43
+161	suck	Lower Murray	Ngaiawang	maoaornun	43
 161	suck	Karnic	Ngamini	tapayi	35
 161	suck	Ngumpin-Yapa	Ngardily		0
 161	suck	Yuin-Kuri	Ngarigu		0
@@ -46956,7 +46958,7 @@
 166	that	Yardli	Yardliyawarra		0
 166	that	Karnic	Yarluyandi	nhaka	33
 166	that	Karnic	Yawarrawarrka	nukuka	33
-166	that	Gumbaynggiric	Yaygirr	ŋay	
+166	that	Gumbaynggiric	Yaygirr	ŋay
 166	that	Paman	Yidiny	ŋuŋku	58
 166	that	Ngayarta	Yindjibarndi	walaardu	7
 166	that	Warluwaric	Yindjilandji		0
@@ -48794,9 +48796,9 @@
 174	three	Kanyara-Mantharta	Warriyangga	tyarrku	9
 174	three	WestVictoria	Warrnambool	palamiya, pulimiya	99
 174	three	Warumungic	Warumungu	kuty:arra yarnti, yurrkati, yurrkarti, wurkartu	16
-174	three	Maric	Warungu	"-karpu"	54
+174	three	Maric	Warungu	'-karpu'	54
 174	three	Kulin	Wathawurrung	bulayt ba koynmayt	30
-174	three	Kulin	Wathiwathi	d\ola k\yup	95
+174	three	Kulin	Wathiwathi	d/ola k/yup	95
 174	three	Nyungar	Watjuk	moa	122
 174	three	Lower Murray	Wellington	boola oonboyie	40
 174	three	Kulin	WembaWemba	kepin pa kalepul	4
@@ -50662,7 +50664,7 @@
 180	tooth	Warumungic	Warumungu	jala	14
 180	tooth	Maric	Warungu	dirra	3
 180	tooth	Kulin	Wathawurrung	liaŋ	3
-180	tooth	Kulin	Wathiwathi	l\iannoo	3
+180	tooth	Kulin	Wathiwathi	l/iannoo	3
 180	tooth	Nyungar	Watjuk	ngulla	6
 180	tooth	Lower Murray	Wellington	ngentko	41
 180	tooth	Kulin	WembaWemba	liya	3
@@ -51284,7 +51286,7 @@
 183	two	Warumungic	Warumungu	kuty:arra	1
 183	two	Maric	Warungu	pulari	4
 183	two	Kulin	Wathawurrung	bulayt	9
-183	two	Kulin	Wathiwathi	p\ola	2
+183	two	Kulin	Wathiwathi	p/ola	2
 183	two	Nyungar	Watjuk	kutyal	1
 183	two	Lower Murray	Wellington	pula	2
 183	two	Kulin	WembaWemba	puletya	9
@@ -51685,7 +51687,7 @@
 185	walk	Yuin-Kuri	Dhurga	yana-	40
 185	walk	Yolngu	Dhuwal		0
 185	walk	Yolngu	Dhuwala	garama	69
-185	walk	Karnic	Diyari	balkal\a, taykana	21
+185	walk	Karnic	Diyari	balkal/a, taykana	21
 185	walk	Paman	Djabugay	tyinpa-l	61
 185	walk	Yolngu	Djambarrpuyngu		0
 185	walk	Yolngu	Djapu		0
@@ -53176,7 +53178,7 @@
 189	wet	Yardli	Yardliyawarra		0
 189	wet	Karnic	Yarluyandi	ŋapa-tyarda	34
 189	wet	Karnic	Yawarrawarrka		0
-189	wet	Gumbaynggiric	Yaygirr	yalu:ki	
+189	wet	Gumbaynggiric	Yaygirr	yalu:ki
 189	wet	Paman	Yidiny	gujan	60
 189	wet	Ngayarta	Yindjibarndi	manthi	9
 189	wet	Warluwaric	Yindjilandji		0
@@ -54109,7 +54111,7 @@
 192	where?	Yardli	Yardliyawarra		0
 192	where?	Karnic	Yarluyandi		0
 192	where?	Karnic	Yawarrawarrka	yilakari	28
-192	where?	Gumbaynggiric	Yaygirr	yurraŋatyi	
+192	where?	Gumbaynggiric	Yaygirr	yurraŋatyi
 192	where?	Paman	Yidiny	wanyja:	5
 192	where?	Ngayarta	Yindjibarndi	wanthila	5
 192	where?	Warluwaric	Yindjilandji		0
@@ -55949,7 +55951,7 @@
 199	woman	Warumungic	Warumungu	kirrityi	22
 199	woman	Maric	Warungu	warrngu	86
 199	woman	Kulin	Wathawurrung	ba-gurrk	36
-199	woman	Kulin	Wathiwathi	l\eyoor	56
+199	woman	Kulin	Wathiwathi	l/eyoor	56
 199	woman	Nyungar	Watjuk	jakker	48
 199	woman	Lower Murray	Wellington	yenna	49
 199	woman	Kulin	WembaWemba	lerrk	56
@@ -56039,7 +56041,7 @@
 202	yellow	Yuin-Kuri	Dhurga		0
 202	yellow	Yolngu	Dhuwal	buthalak	13
 202	yellow	Yolngu	Dhuwala	buthalak	13
-202	yellow	Karnic	Diyari	"kulyakulya, parru (ochre)"	39
+202	yellow	Karnic	Diyari	'kulyakulya, parru (ochre)'	39
 202	yellow	Paman	Djabugay	marrka	8
 202	yellow	Yolngu	Djambarrpuyngu	buthalak	13
 202	yellow	Yolngu	Djapu	buthalak	13
@@ -56656,7 +56658,7 @@
 204	sick	Maric	Dharawala		0
 204	sick	Yuin-Kuri	Dharuk	ba-dyal	34
 204	sick	Maric	Dharumbal	kurhayiki	80
-204	sick	Yolngu	Dhayyi	\pverb intransitive	12
+204	sick	Yolngu	Dhayyi	/pverb intransitive	12
 204	sick	Yuin-Kuri	Dhudhuroa	yidjanabi	40
 204	sick	Yuin-Kuri	Dhurga	gandyama-ga	62
 204	sick	Yolngu	Dhuwal	ŋambaŋambaty	82
@@ -56908,7 +56910,7 @@
 204	sick	Yardli	Yardliyawarra		0
 204	sick	Karnic	Yarluyandi	dapa	56
 204	sick	Karnic	Yawarrawarrka	munya	25
-204	sick	Gumbaynggiric	Yaygirr	wikuna	
+204	sick	Gumbaynggiric	Yaygirr	wikuna
 204	sick	Paman	Yidiny	murran	104
 204	sick	Ngayarta	Yindjibarndi	yirriri	6
 204	sick	Warluwaric	Yindjilandji	tyirityiri	78
@@ -58522,7 +58524,7 @@
 222	knee	Maric	Dharawala		0
 222	knee	Yuin-Kuri	Dharuk	bunang	8
 222	knee	Maric	Dharumbal	bikal	47
-222	knee	Yolngu	Dhayyi	\e bun'kumu	8
+222	knee	Yolngu	Dhayyi	/e bun'kumu	8
 222	knee	Yuin-Kuri	Dhudhuroa	dhiminba	26
 222	knee	Yuin-Kuri	Dhurga	ngumu	10
 222	knee	Yolngu	Dhuwal	bun'kumu	8
@@ -58774,7 +58776,7 @@
 222	knee	Yardli	Yardliyawarra	mataka	15
 222	knee	Karnic	Yarluyandi	pantja	19
 222	knee	Karnic	Yawarrawarrka	pantya	19
-222	knee	Gumbaynggiric	Yaygirr	ya:rhin	
+222	knee	Gumbaynggiric	Yaygirr	ya:rhin
 222	knee	Paman	Yidiny	bunggu	8
 222	knee	Ngayarta	Yindjibarndi	marnburr	4
 222	knee	Warluwaric	Yindjilandji	ɪndʒɪnjɪ	36
@@ -59059,7 +59061,7 @@
 232	older brother	Warumungic	Warumungu	paparti	21
 232	older brother	Maric	Warungu	mugina	3
 232	older brother	Kulin	Wathawurrung	yandang	77
-232	older brother	Kulin	Wathiwathi	w\awoo	23
+232	older brother	Kulin	Wathiwathi	w/awoo	23
 232	older brother	Nyungar	Watjuk	Knundan	15
 232	older brother	Lower Murray	Wellington	marruko	18
 232	older brother	Kulin	WembaWemba	wakook	78
@@ -59370,7 +59372,7 @@
 234	older sister	Warumungic	Warumungu	kapurlu	3
 234	older sister	Maric	Warungu		0
 234	older sister	Kulin	Wathawurrung	tjatjarrang	26
-234	older sister	Kulin	Wathiwathi	m\enoo	52
+234	older sister	Kulin	Wathiwathi	m/enoo	52
 234	older sister	Nyungar	Watjuk	chukan	9
 234	older sister	Lower Murray	Wellington	miŋkan	20
 234	older sister	Kulin	WembaWemba	chargook	26
@@ -60477,7 +60479,7 @@
 239	mother's mother	Paman	KuukThaayorre	(ngan)keme	2
 239	mother's mother	Paman	KuukuYa’u	miimi	10
 239	mother's mother	Lower Murray	LakeHindmarsh		0
-239	mother's mother	Tangkic	Lardil	nyerre	
+239	mother's mother	Tangkic	Lardil	nyerre
 239	mother's mother	Paman	Linngithigh	mi	2
 239	mother's mother	unknown	LowerBurdekin		0
 239	mother's mother	Western Torres	Mabuiag		0
@@ -61136,7 +61138,7 @@
 253	hill	Maric	NatalDowns		0
 253	hill	Lower Murray	NedsCornerStation		0
 253	hill	Bandjalangic	NerangCreek		0
-253	hill	Nyungar	NewNorciaandLeschenaultBay	Cattacor\ere	89
+253	hill	Nyungar	NewNorciaandLeschenaultBay	Cattacor/ere	89
 253	hill	Bandjalangic	NggoiMwoi	molee	1
 253	hill	Wati	Ngaanyatjarra	wararra	97
 253	hill	Mirniny	Ngadjumaya	too, tuu	84
@@ -61262,7 +61264,7 @@
 253	hill	Yardli	Yardliyawarra	yanda	37
 253	hill	Karnic	Yarluyandi		0
 253	hill	Karnic	Yawarrawarrka	wodna	102
-253	hill	Gumbaynggiric	Yaygirr	wapun	
+253	hill	Gumbaynggiric	Yaygirr	wapun
 253	hill	Paman	Yidiny	bunda	29
 253	hill	Ngayarta	Yindjibarndi	bargu	73
 253	hill	Warluwaric	Yindjilandji	badibi	23
@@ -62212,3 +62214,138 @@
 326	mother's brother	Wati	Yulparija	kaka	1
 326	mother's brother	Central NSW	Yuwaalaraay	garruu	5
 326	mother's brother	Yolngu	Zorc	ŋanakal	9
+
+
+";
+@s = split('
+',$s);
+
+$n = 0;
+for $s (@s) {
+	@x = split('\t',$s);
+	$d{$x[3],$x[0]} = $d{$x[3],$x[0]}." ".$x[5];
+	$word{$x[3],$x[0]} = $x[4];
+	$class{$x[3],$x[0]} = $x[2];
+
+	$count[$x[0]][$x[5]] = $count[$x[0]][$x[5]] + 1;
+if ($lan{$x[3]} != 1) {
+	$lan{$x[3]} = 1;
+}
+	$w[$x[0]] = $x[1];
+$n++;
+}
+
+@s = keys(%lan);
+print STDERR "$#s languages about $n cognate/words\n";
+
+$nlan=0;
+for $lan (sort(keys(%lan))) {
+    $nlan++;
+}
+
+$THRESHOLD = 1;
+
+sub printNexus {
+	$nchar = 0;
+	$entries = '';
+	for ($i = 1; $i <=204; $i++) {
+		for ($j = 1; $j <=704; $j++) {
+			if ($count[$i][$j]>$THRESHOLD) {
+				$nchar++;
+				$entries .= "#$w[$i] $j\n";
+			}
+		}
+	}
+
+	print "#NEXUS\n";
+	print "\n#All cognates from pny7-multistate.tab with more than $THRESHOLD occurances\n\n";
+	print "Begin data;\n";
+	print "Dimensions ntax=$nlan nchar=$nchar;\n";
+	print "Format datatype=binary symbols=\"01\" gap=-;\n";
+	print "Matrix\n";
+
+	for $lan (sort(keys(%lan))) {
+		$s = $lan;
+		$s =~ s/ //g;
+		$s =~ s/'//g;
+		print "$s ";
+		for ($i = 1; $i <=204; $i++) {
+			for ($j = 1; $j <=704; $j++) {
+				if ($count[$i][$j]>$THRESHOLD) {
+					$cognate{$i,$j}=1;
+					if ($d{$lan,$i} == $j) {
+						print '1';
+					} elsif ($d{$lan,$i} == 0) {
+						print '-';
+					} else {
+						print '0';
+					}
+				}
+			}
+		}
+		print "\n";
+	}
+
+	print ";\nEnd;\n";
+	print $entries;
+}
+
+$k = 0;
+print STDERR "\#site word cognate count\n";
+for ($i = 1; $i <=204; $i++) {
+	for ($j = 1; $j <=204; $j++) {
+		if ($cognate{$i,$j} == 1) {
+			$k++;
+			print "\#"."$k $i $j $count[$i][$j]\n";
+		}
+	}
+}
+
+sub printOccurrances {
+	for ($i = 1; $i <=204; $i++) {
+		for ($j = 1; $j <=204; $j++) {
+			if ($count[$i][$j]>0) {
+				$n[$count[$i][$j]] = $n[$count[$i][$j]] + 1;
+			}
+		}
+	}
+
+	$sum = 0;
+	for ($i = 0; $i <=80; $i++) {
+		$sum += $n[$i];
+		print STDERR "$i $n[$i] $sum\n";
+	}
+}
+
+for ($i = 1; $i <=204; $i++) {
+	for ($j = 1; $j <=204; $j++) {
+		$count[$i][$j] = 0;
+	}
+}
+
+for $lan (keys(%lan)) {
+	for ($i = 1; $i <=204; $i++) {
+		$c = $d{$lan,$i};
+		if (($c ne 0) && ($c ne '')) {
+			$count[$i][$c] += 1;
+		}
+	}
+}
+
+
+
+for ($i = 1; $i <=204; $i++) {
+	for $lan (keys(%lan)) {
+		print STDERR "$i\t";
+		print STDERR "$w[$i]\t";
+		print STDERR "$lan\t".$class{$lan,$i}."\t$word{$lan,$i}\t";
+		print STDERR "$d{$lan,$i}\n"
+	}
+}
+
+
+
+
+printNexus();
+# printNexus();
+# exit;
