@@ -22,7 +22,7 @@ FORMAT
 ;
 MATRIX
 Judaism 0001
-Protestant 0011
+Protestant -011
 Lutheran 1001
 ;
 END;[Characters]

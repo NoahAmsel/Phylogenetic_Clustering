@@ -10,40 +10,58 @@ def myplot(obj, *args, **kwargs):
                     orientation="right-left", *args, **kwargs)
     PLOT_NUM += 1
 
+def plot_comms(clustering, *args, **kwargs):
+    myplot(clustering, vertex_color=clustering.membership, *args, **kwargs)
+
 # returns dictionary where values are lists of strings
-def nex2char_dict(nex_file):
+def nex2char_dict(nex_file, missing="-"):
     n = NexusReader()
     n.read_file(nex_file)
-    return n.data.matrix # a dict
+    char_dict = {}
+    for label, chars in n.data.matrix.iteritems(): #a dict
+        char_dict[label] = np.array([np.nan if x==missing else float(x) for x in chars])
+    return char_dict
 
-def char_dict2dist_mat(char_dict):
-    def dist(a,b):
-        pass
+def hamming_sim(a,b):
+    #assumes we're getting np.arrays
+    assert a.shape == b.shape
+    shared_features = (a==b).sum()
+    present_features = (~(np.isnan(a)|np.isnan(b))).sum()
+    return float(shared_features)/present_features
 
+def inverse_hamming_dist(a,b):
+    #assumes we're getting np.arrays
+    assert a.shape == b.shape
+    present_features = (~(np.isnan(a)|np.isnan(b))).sum()
+    unshared_features = (a!=b).sum() - (len(a) - present_features) #np.nan is unequal to everything
+    if unshared_features==0:
+        return np.inf
+    else:
+        return float(present_features)/unshared_features
+
+def char_dict2sim_mat(char_dict, sim_fun):
     n = len(char_dict)
-    distances = np.zeros((n,n))
+    similarities = np.zeros((n,n))
     keys = char_dict.keys()
     for ix1, key1 in enumerate(keys):
         for ix2, key2 in enumerate(keys):
-            distances[ix1, ix2] = dist(char_dict[key1], char_dict[key2])
-
-    return distances
+            similarities[ix1, ix2] = sim_fun(char_dict[key1], char_dict[key2])
+    return similarities
 
 # ig.Graph.Adjacency(DistMatrix, mode = 'DIRECTED') won't work with weights
-def build_lang_graph(dist_matrix, labels):
+def build_lang_graph(sim_matrix, labels): #sim_matrix is SIMILARITY scores not distances
     n = len(labels)
-    dist_ray = np.array(dist_matrix)
-    assert n == dist_ray.shape[0] == dist_ray.shape[1]
-    assert np.allclose(dist_ray, dist_ray.T, atol=0.01)
+    sim_ray = np.array(sim_matrix)
+    assert n == sim_ray.shape[0] == sim_ray.shape[1]
+    assert np.allclose(sim_ray, sim_ray.T, atol=0.001)
     L = ig.Graph.Full(n)
     L.vs['label'] = labels
     for i in range(n):
         for j in range(i+1, n):
-            L.es[L.get_eid(i,j)]["weight"] = dist_ray[i,j]
+            L.es[L.get_eid(i,j)]['weight'] = sim_ray[i,j]
+    L.es['width'] = L.es['weight']
     return L
 
-def plot_comms(clustering, *args, **kwargs):
-    myplot(clustering, vertex_color=clustering.membership, *args, **kwargs)
 
 """
 g = Graph()
