@@ -19,7 +19,7 @@ def nex2char_dict(nex_file, missing="-"):
     n.read_file(nex_file)
     char_dict = {}
     for label, chars in n.data.matrix.iteritems(): #a dict
-        char_dict[label] = np.array([np.nan if x==missing else float(x) for x in chars])
+        char_dict[label.encode('ascii','replace')] = np.array([np.nan if x==missing else float(x) for x in chars])
     return char_dict
 
 def hamming_sim(a,b):
@@ -35,7 +35,7 @@ def inverse_hamming_dist(a,b):
     present_features = (~(np.isnan(a)|np.isnan(b))).sum()
     unshared_features = (a!=b).sum() - (len(a) - present_features) #np.nan is unequal to everything
     if unshared_features==0:
-        return np.inf
+        return float(present_features)
     else:
         return float(present_features)/unshared_features
 
@@ -61,6 +61,59 @@ def build_lang_graph(sim_matrix, labels): #sim_matrix is SIMILARITY scores not d
             L.es[L.get_eid(i,j)]['weight'] = sim_ray[i,j]
     L.es['width'] = L.es['weight']
     return L
+
+def nexus2lang_graph(nex_file, sim_fun, missing="-"):
+    chars = nex2char_dict(nex_file, missing=missing)
+    sims = char_dict2sim_mat(chars, sim_fun)
+    return build_lang_graph(sims, chars.keys())
+
+def dendro2nexus(dendro, file):
+    with open(file, 'w') as f:
+        graph = dendro.as_clustering().graph
+        f.write('#NEXUS\n')
+        f.write('Begin trees;\n')
+        if 'label' in graph.vs.attribute_names():
+            f.write('\ttranslate\n')
+            for ix, v in enumerate(G.vs):
+                if ix==len(G.vs)-1:
+                    # semicolon
+                    f.write('\t\t{0}\t{1};\n'.format(ix, v['label']))
+                else:
+                    f.write('\t\t{0}\t{1},\n'.format(ix, v['label']))
+        f.write('\t\ttree Dendrogram = {0}\n'.format(dendro.format()))
+        f.write('end;')
+
+def nested2nexus(nested, labels, file):
+    def iterative_newkirk(nested):
+        if not hasattr(nested, '__iter__'):
+            return str(int(nested))
+        else:
+            return "(" + ",".join([iterative_newkirk(x) for x in nested]) + ")"
+
+    with open(file, 'w') as f:
+        f.write('#NEXUS\n')
+        f.write('Begin trees;\n')
+        f.write('\ttranslate\n')
+        for ix, v in enumerate(labels):
+            if ix==len(labels)-1:
+                # semicolon
+                f.write('\t\t{0}\t{1};\n'.format(ix, v))
+            else:
+                f.write('\t\t{0}\t{1},\n'.format(ix, v))
+        f.write('\t\ttree Dendrogram = {0};\n'.format(iterative_newkirk(nested)))
+        f.write('end;')
+
+
+def iterative_community_helper(graph):
+    cl = graph.community_leading_eigenvector()
+    if len(cl.subgraphs())==1:
+        if len(graph.vs)==1:
+            return graph.vs['id'][0]
+        else:
+            return graph.vs['id']
+    else:
+        return [iterative_community_helper(sub) for sub in cl.subgraphs()]
+
 
 
 """
