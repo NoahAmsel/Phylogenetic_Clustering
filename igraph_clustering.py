@@ -124,7 +124,7 @@ def iterative_community_binary(graph):
         return graph.vs['id'][0]
 
     if 'id' not in graph.vs.attributes():
-        graph.vs['id'] = list(range(len(graph.vs)))
+        graph.vs['id'] = list(range(1,1+len(graph.vs)))
     w = 'weight' if 'weight' in graph.es.attributes() else None
     cl = graph.community_leading_eigenvector(weights=w, clusters=2)
     if len(cl.subgraphs())==1:
@@ -133,7 +133,7 @@ def iterative_community_binary(graph):
 
 def iterative_community(graph, clusters=None):
     if 'id' not in graph.vs.attributes():
-        graph.vs['id'] = list(range(len(graph.vs)))
+        graph.vs['id'] = list(range(1,1+len(graph.vs)))
     w = 'weight' if 'weight' in graph.es.attributes() else None
     cl = graph.community_leading_eigenvector(weights=w, clusters=clusters)
     if len(cl.subgraphs())==1:
