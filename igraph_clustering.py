@@ -74,8 +74,8 @@ def dendro2nexus(dendro, file):
         f.write('Begin trees;\n')
         if 'label' in graph.vs.attribute_names():
             f.write('\ttranslate\n')
-            for ix, v in enumerate(G.vs):
-                if ix==len(G.vs)-1:
+            for ix, v in enumerate(graph.vs):
+                if ix==len(graph.vs)-1:
                     # semicolon
                     f.write('\t\t{0}\t{1};\n'.format(ix, v['label']))
                 else:
@@ -103,16 +103,48 @@ def nested2nexus(nested, labels, file):
         f.write('\t\ttree Dendrogram = {0};\n'.format(iterative_newkirk(nested)))
         f.write('end;')
 
+def nested2dendro(nested, graph):
+    nested2dendro.merges = []
+    nested2dendro.next_vert = len(graph.vs)
 
-def iterative_community_helper(graph):
-    cl = graph.community_leading_eigenvector()
+    def helper(nested):
+        if hasattr(nested, '__iter__'):
+            assert len(nested) == 2
+            nested2dendro.merges.append((helper(nested[0]),helper(nested[1])))
+            nested2dendro.next_vert += 1
+            return nested2dendro.next_vert-1
+        else:
+            return nested
+
+    helper(nested)
+    return ig.VertexDendrogram(graph, nested2dendro.merges)
+
+def iterative_community_binary(graph):
+    if len(graph.vs)==1:
+        return graph.vs['id'][0]
+
+    if 'id' not in graph.vs.attributes():
+        graph.vs['id'] = list(range(len(graph.vs)))
+    w = 'weight' if 'weight' in graph.es.attributes() else None
+    cl = graph.community_leading_eigenvector(weights=w, clusters=2)
+    if len(cl.subgraphs())==1:
+        cl = graph.community_fastgreedy(weights=w).as_clustering(n=2)
+    return [iterative_community_binary(sub) for sub in cl.subgraphs()]
+
+def iterative_community(graph, clusters=None):
+    if 'id' not in graph.vs.attributes():
+        graph.vs['id'] = list(range(len(graph.vs)))
+    w = 'weight' if 'weight' in graph.es.attributes() else None
+    cl = graph.community_leading_eigenvector(weights=w, clusters=clusters)
     if len(cl.subgraphs())==1:
         if len(graph.vs)==1:
             return graph.vs['id'][0]
         else:
             return graph.vs['id']
     else:
-        return [iterative_community_helper(sub) for sub in cl.subgraphs()]
+        return [iterative_community(sub, clusters=clusters) for sub in cl.subgraphs()]
+
+
 
 
 
@@ -134,7 +166,7 @@ community_walktrap(self, weights=None, steps=4)
 FURTHER, we can adapt: community_multilevel(self, weights=None, return_levels=False)
 """
 
-karate = ig.load("karate.gml")
+"""karate = ig.load("karate.gml")
 layout = karate.layout("kk")
 cl = karate.community_leading_eigenvector(clusters=2)
 plot_comms(cl, layout=layout)
@@ -143,16 +175,16 @@ plot_comms(cl, layout=layout)
 cl = karate.community_leading_eigenvector(clusters=4)
 plot_comms(cl, layout=layout)
 cl = karate.community_leading_eigenvector()
-plot_comms(cl, layout=layout)
+plot_comms(cl, layout=layout)"""
 
 #cl = karate.community_leading_eigenvector_naive()
 
 
-from turk_given_dist import Turk_dist_mat, Turk_labels
+"""from turk_given_dist import Turk_dist_mat, Turk_labels
 g = build_lang_graph(Turk_dist_mat, Turk_labels)
 layout = g.layout("kk")
 cl = g.community_leading_eigenvector(weights=g.es['weight'])
-plot_comms(cl, layout=layout)
+plot_comms(cl, layout=layout)"""
 
 """
 myplot(g, layout = layout)
@@ -160,4 +192,5 @@ myplot(g, layout = layout)
 cl = g.community_fastgreedy(weights=g.es['weight'])
 myplot(cl, layout=layout)
 plot_comms(cl.as_clustering())
-#myplot(cl, layout=layout, vertex_label=cl.as_clustering().membership)"""
+#myplot(cl, layout=layout, vertex_label=cl.as_clustering().membership)
+"""
