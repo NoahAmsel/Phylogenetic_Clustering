@@ -1,17 +1,19 @@
 from datetime import datetime
+from collections import defaultdict
 import numpy as np
 import igraph as ig
 from nexus import NexusReader
 
-PLOT_NUM = 1
 def myplot(obj, *args, **kwargs):
-    global PLOT_NUM
-    ig.plot(obj, target="cairo_dumps/"+datetime.now().strftime('%d-%H-%M-%S')+"__{0}.png".format(PLOT_NUM),
+    ig.plot(obj, target="cairo_dumps/"+datetime.now().strftime('%d-%H-%M-%S')+"__{0}.png".format(myplot.PLOT_NUM),
                     orientation="right-left", *args, **kwargs)
-    PLOT_NUM += 1
+    myplot.PLOT_NUM += 1
+myplot.PLOT_NUM = 1
 
 def plot_comms(clustering, *args, **kwargs):
     myplot(clustering, vertex_color=clustering.membership, *args, **kwargs)
+
+karate = ig.load("karate.gml")
 
 # returns dictionary where values are lists of strings
 def nex2char_dict(nex_file, missing="-"):
@@ -68,6 +70,9 @@ def nexus2lang_graph(nex_file, sim_fun, missing="-"):
     return build_lang_graph(sims, chars.keys())
 
 def dendro2nexus(dendro, file):
+    """
+    DEPRECATED
+    """
     with open(file, 'w') as f:
         graph = dendro.as_clustering().graph
         f.write('#NEXUS\n')
@@ -83,10 +88,13 @@ def dendro2nexus(dendro, file):
         f.write('\t\ttree Dendrogram = {0}\n'.format(dendro.format()))
         f.write('end;')
 
-def nested2nexus(nested, labels, file):
+def labelednested2nexus(nested, labels, file, ix_shift=0):
+    """
+    DEPRECATED
+    """
     def iterative_newkirk(nested):
         if not hasattr(nested, '__iter__'):
-            return str(int(nested))
+            return str(int(nested+ix_shift))
         else:
             return "(" + ",".join([iterative_newkirk(x) for x in nested]) + ")"
 
@@ -97,15 +105,17 @@ def nested2nexus(nested, labels, file):
         for ix, v in enumerate(labels):
             if ix==len(labels)-1:
                 # semicolon
-                f.write('\t\t{0}\t{1};\n'.format(ix, v))
+                f.write('\t\t{0}\t{1};\n'.format(ix+ix_shift, v))
             else:
-                f.write('\t\t{0}\t{1},\n'.format(ix, v))
+                f.write('\t\t{0}\t{1},\n'.format(ix+ix_shift, v))
         f.write('\t\ttree Dendrogram = {0};\n'.format(iterative_newkirk(nested)))
         f.write('end;')
 
+
+
 def nested2dendro(nested, graph):
     nested2dendro.merges = []
-    nested2dendro.next_vert = len(graph.vs)
+    nested2dendro.next_vert = graph.vcount()
 
     def helper(nested):
         if hasattr(nested, '__iter__'):
@@ -114,83 +124,86 @@ def nested2dendro(nested, graph):
             nested2dendro.next_vert += 1
             return nested2dendro.next_vert-1
         else:
-            return nested
+            return int(nested)
 
     helper(nested)
     return ig.VertexDendrogram(graph, nested2dendro.merges)
 
-def iterative_community_binary(graph):
-    if len(graph.vs)==1:
-        return graph.vs['id'][0]
+def fast_greedy_wrapper(graph, weights=None):
+    dendro = graph.community_fastgreedy(weights=weights)
+    return list(range(graph.vcount())), dendro.merges
 
-    if 'id' not in graph.vs.attributes():
-        graph.vs['id'] = list(range(1,1+len(graph.vs)))
-    w = 'weight' if 'weight' in graph.es.attributes() else None
-    cl = graph.community_leading_eigenvector(weights=w, clusters=2)
-    if len(cl.subgraphs())==1:
-        cl = graph.community_fastgreedy(weights=w).as_clustering(n=2)
-    return [iterative_community_binary(sub) for sub in cl.subgraphs()]
+def edge_betweenness_wrapper(graph, weights=None):
+    dendro = graph.community_edge_betweenness(directed=False, weights=weights)
+    return list(range(graph.vcount())), dendro.merges
 
-def iterative_community(graph, clusters=None):
-    if 'id' not in graph.vs.attributes():
-        graph.vs['id'] = list(range(1,1+len(graph.vs)))
-    w = 'weight' if 'weight' in graph.es.attributes() else None
-    cl = graph.community_leading_eigenvector(weights=w, clusters=clusters)
-    if len(cl.subgraphs())==1:
-        if len(graph.vs)==1:
-            return graph.vs['id'][0]
-        else:
-            return graph.vs['id']
+def safe_edge_betweenness_wrapper(graph, weights=None):
+    if graph.vcount() > 40:
+        return fast_greedy_wrapper(graph, weights=weights)
     else:
-        return [iterative_community(sub, clusters=clusters) for sub in cl.subgraphs()]
+        return edge_betweenness_wrapper(graph, weights=weights)
 
+def newman_wrapper(graph, weights=None, arpack_options=None):
+    """
+    Same as community_leading_eigenvector method of graph,
+    but modified to return the merge history
+    return is tuple of membership list, merge history (where numbers are the cluster numbers)
+    """
 
+    kwds = dict(weights=weights)
+    if arpack_options is not None:
+        kwds["arpack_options"] = arpack_options
 
+    cluster_list, merges, _ = ig.GraphBase.community_leading_eigenvector(graph, -1, **kwds)
+    return cluster_list, merges
 
+def newman_tree(graph, method, weights=None, labels=None, backup=None):
+    """
+    method and backup are functions that take a graph and an optional
+    weights parameter and return a nested list
+    """
+    if isinstance(weights, basestring):
+        weights = graph.es[weights]
+    if labels == None:
+        labels = [str(i) for i in range(graph.vcount())]
+    if backup == None:
+        backup = lambda graph, weights, labels: labels
+    assert len(labels) == graph.vcount()
 
-"""
-g = Graph()
-g.add_vertices(3) #adds 3 edges
-g.add_edges([(0,1), (1,2)])
-g.vs["label"] = ["Alice", "Bob", "Claire", "Dennis", "Esther", "Frank", "George"] #labels
-g.es[g.get_eid(2,3)]["is_formal"] = True #adds a label two the specific edge 2~3
+    # base case
+    if graph.vcount() == 1:
+        return labels[0]
 
-"""
+    cluster_list, merges = method(graph, weights=weights)
 
-"""
-#methods that return a dengrogram -- see https://igraph.org/python/doc/igraph.clustering.VertexDendrogram-class.html
-community_fastgreedy(self, weights=None)
-community_leading_eigenvector_naive(clusters=None, return_merges=False)
-community_edge_betweenness(self, clusters=None, directed=True, weights=None)
-community_walktrap(self, weights=None, steps=4)
-FURTHER, we can adapt: community_multilevel(self, weights=None, return_levels=False)
-"""
+    if len(merges)==0:
+        # method didn't find anything to split
+        # try the backup method
+        return newman_tree(graph, backup, weights=weights, labels=labels, backup=None)
+    else:
+        # collect the clusters
+        cluster2subtree = defaultdict(list)
+        for vertex_ix, cluster_ix in enumerate(cluster_list):
+            cluster2subtree[cluster_ix].append(vertex_ix)
 
-"""karate = ig.load("karate.gml")
-layout = karate.layout("kk")
-cl = karate.community_leading_eigenvector(clusters=2)
-plot_comms(cl, layout=layout)
-cl = karate.community_leading_eigenvector(clusters=3)
-plot_comms(cl, layout=layout)
-cl = karate.community_leading_eigenvector(clusters=4)
-plot_comms(cl, layout=layout)
-cl = karate.community_leading_eigenvector()
-plot_comms(cl, layout=layout)"""
+        # resolve each one to a nested list
+        for cluster_ix, vertex_list in cluster2subtree.iteritems():
+            subgraph = graph.subgraph(vertex_list)
+            cluster2subtree[cluster_ix] = newman_tree(subgraph,
+                                                      method,
+                                                      weights=weights,
+                                                      labels=[labels[v] for v in sorted(vertex_list)],
+                                                      backup=backup)
 
-#cl = karate.community_leading_eigenvector_naive()
+        next_inner_node_ix = max(cluster2subtree.keys())+1
+        for left, right in merges:
+            cluster2subtree[next_inner_node_ix] = [cluster2subtree[left], cluster2subtree[right]]
+            next_inner_node_ix += 1
 
+        return cluster2subtree[max(cluster2subtree.keys())]
 
-"""from turk_given_dist import Turk_dist_mat, Turk_labels
-g = build_lang_graph(Turk_dist_mat, Turk_labels)
-layout = g.layout("kk")
-cl = g.community_leading_eigenvector(weights=g.es['weight'])
-plot_comms(cl, layout=layout)"""
-
-"""
-myplot(g, layout = layout)
-
-cl = g.community_fastgreedy(weights=g.es['weight'])
-myplot(cl, layout=layout)
-plot_comms(cl.as_clustering())
-#myplot(cl, layout=layout, vertex_label=cl.as_clustering().membership)
-"""
+"""#print newman_tree(karate, backup=lambda)
+plot_comms(karate.community_leading_eigenvector(), vertex_label=range(karate.vcount()))
+t = newman_tree(karate, newman_wrapper, backup=fast_greedy_wrapper)
+print(t)
+myplot(nested2dendro(t, karate), vertex_label=range(karate.vcount()))"""

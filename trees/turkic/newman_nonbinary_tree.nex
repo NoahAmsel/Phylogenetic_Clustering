@@ -1,0 +1,17 @@
+#NEXUS
+Begin trees;
+	translate
+		1	Turkish,
+		2	Uzbek,
+		3	Cuvash,
+		4	Karachai,
+		5	Tatar,
+		6	Khakass,
+		7	SouthAltaic,
+		8	Tuvan,
+		9	Yakut,
+		10	Kazakh,
+		11	Kirghiz,
+		12	Turkmen;
+		tree Dendrogram = ((1,2,4,5,10,11,12),(3,6,7,8,9));
+end;
