@@ -250,7 +250,7 @@ def newman_wrapper(graph, weights=None, arpack_options=None):
     try:
         cluster_list, merges, _ = ig.GraphBase.community_leading_eigenvector(graph, -1, **kwds)
         return cluster_list, merges
-    except InternalError():
+    except ig._igraph.InternalError:
         return [], []
 
 def iterative_clustering(graph, method, weights=None, labels=None, backup=None):

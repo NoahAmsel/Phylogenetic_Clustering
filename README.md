@@ -12,6 +12,8 @@ http://etetoolkit.org/docs/2.3/tutorial/tutorial_trees.html#creating-trees-from-
 
 bantu data https://github.com/D-PLACE/dplace-data/tree/master/phylogenies/grollemund_et_al2015
 
+biclustering https://scikit-learn.org/stable/modules/biclustering.html
+
 PNY data: ran the perl script on the tsv she sent. also had to convert the whole file to UTF-8 encoding and
 correct some mis-capitalized labels (that created mismatches with the reference tree)
 
