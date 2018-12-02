@@ -223,12 +223,15 @@ def safe_edge_betweenness_wrapper(graph, weights=None):
 
 def coclustering_wrapper(graph, weights=None):
     X = get_bipart_mat(graph)
-    if X.shape[0] <= 1:
+    if X.shape[0] <= 1 or X.shape[1] <= 1:
         return [], []
     elif X.shape[0] == 2:
         return [0,1], [(0,1)]
     else:
-        clustering = SpectralCoclustering(n_clusters=2, random_state=0).fit(X)
+        try:
+            clustering = SpectralCoclustering(n_clusters=2, random_state=0).fit(X)
+        except:
+            print(X)
         row_labels = list(clustering.row_labels_)
         if max(row_labels)-min(row_labels) == 0:
             return [], []
@@ -244,9 +247,11 @@ def newman_wrapper(graph, weights=None, arpack_options=None):
     kwds = dict(weights=weights)
     if arpack_options is not None:
         kwds["arpack_options"] = arpack_options
-
-    cluster_list, merges, _ = ig.GraphBase.community_leading_eigenvector(graph, -1, **kwds)
-    return cluster_list, merges
+    try:
+        cluster_list, merges, _ = ig.GraphBase.community_leading_eigenvector(graph, -1, **kwds)
+        return cluster_list, merges
+    except InternalError():
+        return [], []
 
 def iterative_clustering(graph, method, weights=None, labels=None, backup=None):
     """
@@ -263,12 +268,19 @@ def iterative_clustering(graph, method, weights=None, labels=None, backup=None):
     if labels is None:
         labels = [str(i) for i in range(graph.vcount())]
     assert len(labels) == graph.vcount()
-    
+
     # base case
     if graph.vcount() == 1:
         return labels[0]
 
-    cluster_list, merges = method(graph, weights=weights)
+    # deal with orphan vertices separately bc they screw up the coclustering
+    orphans = graph.vs.select(_degree_lt=1)
+    if len(orphans)>0:
+        cluster_list = [0]*graph.vcount()
+        cluster_list[orphans[0].index] = 1
+        merges = [(0,1)]
+    else:
+        cluster_list, merges = method(graph, weights=weights)
 
     if len(merges)==0:
         # method didn't find anything to split
