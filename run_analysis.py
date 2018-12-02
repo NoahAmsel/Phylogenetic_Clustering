@@ -40,28 +40,28 @@ def analyze_lang_word_graph(bigraph, lang_labels, folder):
             target=folder+"/bi_coclustering_greedy.png", orientation="right-left")
 
 turk_complete = nexus2lang_graph('data/turkic/Turkic12langs.nex', inverse_hamming_dist)
-analyze_language_graph(turk_complete, "trees/turkic")
+analyze_language_graph(turk_complete, "results/turkic")
 
 bantu_complete = nexus2lang_graph('./data/bantu/bantu_data.nex', inverse_hamming_dist)
-analyze_language_graph(bantu_complete, "trees/bantu")
+analyze_language_graph(bantu_complete, "results/bantu")
 
 pama_complete = nexus2lang_graph('./data/pny/pny_data.nex', inverse_hamming_dist, taxa=taxa_list('./data/pny/pny_taxa.csv'))
-analyze_language_graph(pama_complete, "trees/pny")
+analyze_language_graph(pama_complete, "results/pny")
 
 turk_bi, turk_lang_labels = nex2bipart_graph("data/turkic/Turkic12langs.nex")
-analyze_lang_word_graph(turk_bi, turk_lang_labels, "trees/turkic/bipartite")
+analyze_lang_word_graph(turk_bi, turk_lang_labels, "results/turkic/bipartite")
 
 # can only do this for turkic, the others are too big
 biturk_newman_comms = turk_bi.community_leading_eigenvector()
 biturk_layout = turk_bi.layout_reingold_tilford(root=list(range(turk_bi.n_langs())))
-ig.plot(biturk_newman_comms, target="trees/turkic/bipartite"+"/bi_comms.png", vertex_color=biturk_newman_comms.membership,
+ig.plot(biturk_newman_comms, target="results/turkic/bipartite"+"/bi_comms.png", vertex_color=biturk_newman_comms.membership,
         vertex_size=[100]*turk_bi.n_langs()+[20]*turk_bi.n_chars(),
         layout=biturk_layout, edge_width=[0.1]*len(biturk_newman_comms.graph.es), vertex_frame_width=0,
         bbox=(max(600,2*turk_bi.vcount()),max(600,turk_bi.vcount())))
 
 
 bantu_bi, bantu_lang_labels = nex2bipart_graph("data/bantu/bantu_data.nex")
-analyze_lang_word_graph(bantu_bi, bantu_lang_labels, "trees/bantu/bipartite")
+analyze_lang_word_graph(bantu_bi, bantu_lang_labels, "results/bantu/bipartite")
 
 pny_bi, pny_lang_labels = nex2bipart_graph("data/pny/pny_data.nex")
-analyze_lang_word_graph(pny_bi, pny_lang_labels, "trees/pny/bipartite")
+analyze_lang_word_graph(pny_bi, pny_lang_labels, "results/pny/bipartite")
