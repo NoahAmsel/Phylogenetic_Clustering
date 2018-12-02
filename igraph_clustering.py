@@ -3,6 +3,10 @@ from collections import defaultdict
 import numpy as np
 import igraph as ig
 from nexus import NexusReader
+from pandas import read_csv
+
+def taxa_list(taxa_csv):
+    return list(read_csv(taxa_csv)['taxon'])
 
 def myplot(obj, *args, **kwargs):
     ig.plot(obj, target="cairo_dumps/"+datetime.now().strftime('%d-%H-%M-%S')+"__{0}.png".format(myplot.PLOT_NUM),
@@ -11,17 +15,20 @@ def myplot(obj, *args, **kwargs):
 myplot.PLOT_NUM = 1
 
 def plot_comms(clustering, *args, **kwargs):
-    myplot(clustering, vertex_color=clustering.membership, *args, **kwargs)
+    layout = clustering.graph.layout_fruchterman_reingold(weights='weight')
+    myplot(clustering, vertex_color=clustering.membership, layout=layout, *args, **kwargs)
 
 karate = ig.load("karate.gml")
 
 # returns dictionary where values are lists of strings
-def nex2char_dict(nex_file, missing="-"):
+def nex2char_dict(nex_file, missing="-", taxa=None):
     n = NexusReader()
     n.read_file(nex_file)
     char_dict = {}
     for label, chars in n.data.matrix.iteritems(): #a dict
-        char_dict[label.encode('ascii','replace')] = np.array([np.nan if x==missing else float(x) for x in chars])
+        if taxa is None or label in taxa:
+            char_dict[label.encode('ascii','replace')] = np.array([np.nan if x==missing else float(x) for x in chars])
+    print("Converting labels to ascii -- is this necessary?")
     return char_dict
 
 def hamming_sim(a,b):
@@ -60,12 +67,15 @@ def build_lang_graph(sim_matrix, labels): #sim_matrix is SIMILARITY scores not d
     L.vs['label'] = labels
     for i in range(n):
         for j in range(i+1, n):
-            L.es[L.get_eid(i,j)]['weight'] = sim_ray[i,j]
+            if sim_ray[i,j] > 0:
+                L.es[L.get_eid(i,j)]['weight'] = sim_ray[i,j]
+            else:
+                L.delete_edges(L.get_eid(i,j))
     L.es['width'] = L.es['weight']
     return L
 
-def nexus2lang_graph(nex_file, sim_fun, missing="-"):
-    chars = nex2char_dict(nex_file, missing=missing)
+def nexus2lang_graph(nex_file, sim_fun, missing="-", taxa=None):
+    chars = nex2char_dict(nex_file, missing=missing, taxa=taxa)
     sims = char_dict2sim_mat(chars, sim_fun)
     return build_lang_graph(sims, chars.keys())
 
@@ -111,9 +121,23 @@ def labelednested2nexus(nested, labels, file, ix_shift=0):
         f.write('\t\ttree Dendrogram = {0};\n'.format(iterative_newkirk(nested)))
         f.write('end;')
 
+def nested2nexus(nested, file):
+    def to_newkirk(nested):
+        if not hasattr(nested, '__iter__'):
+            return nested
+        else:
+            return "(" + ",".join([to_newkirk(x) for x in nested]) + ")"
 
+    with open(file, 'w') as f:
+        f.write('#NEXUS\n')
+        f.write('Begin trees;\n')
+        f.write('\t\ttree Dendrogram = {0};\n'.format(to_newkirk(nested)))
+        f.write('end;')
 
-def nested2dendro(nested, graph):
+def nested2dendro(nested, graph, label):
+    if isinstance(label, basestring):
+        label2ix = {label: int(ix) for ix, label in enumerate(graph.vs[label])}
+
     nested2dendro.merges = []
     nested2dendro.next_vert = graph.vcount()
 
@@ -124,7 +148,7 @@ def nested2dendro(nested, graph):
             nested2dendro.next_vert += 1
             return nested2dendro.next_vert-1
         else:
-            return int(nested)
+            return label2ix[nested]
 
     helper(nested)
     return ig.VertexDendrogram(graph, nested2dendro.merges)
@@ -157,17 +181,20 @@ def newman_wrapper(graph, weights=None, arpack_options=None):
     cluster_list, merges, _ = ig.GraphBase.community_leading_eigenvector(graph, -1, **kwds)
     return cluster_list, merges
 
-def newman_tree(graph, method, weights=None, labels=None, backup=None):
+def iterative_clustering(graph, method, weights=None, labels=None, backup=None):
     """
     method and backup are functions that take a graph and an optional
     weights parameter and return a nested list
     """
     if isinstance(weights, basestring):
-        weights = graph.es[weights]
-    if labels == None:
+        #weights = graph.es[weights]
+        pass
+    else:
+        assert(False)
+    if isinstance(labels, basestring):
+        labels = graph.vs[labels]
+    if labels is None:
         labels = [str(i) for i in range(graph.vcount())]
-    if backup == None:
-        backup = lambda graph, weights, labels: labels
     assert len(labels) == graph.vcount()
 
     # base case
@@ -178,8 +205,12 @@ def newman_tree(graph, method, weights=None, labels=None, backup=None):
 
     if len(merges)==0:
         # method didn't find anything to split
-        # try the backup method
-        return newman_tree(graph, backup, weights=weights, labels=labels, backup=None)
+        if backup is None:
+            # leave the tree unresolved
+            return labels
+        else:
+            # try the backup method if we have one
+            return iterative_clustering(graph, backup, weights=weights, labels=labels, backup=None)
     else:
         # collect the clusters
         cluster2subtree = defaultdict(list)
@@ -189,7 +220,7 @@ def newman_tree(graph, method, weights=None, labels=None, backup=None):
         # resolve each one to a nested list
         for cluster_ix, vertex_list in cluster2subtree.iteritems():
             subgraph = graph.subgraph(vertex_list)
-            cluster2subtree[cluster_ix] = newman_tree(subgraph,
+            cluster2subtree[cluster_ix] = iterative_clustering(subgraph,
                                                       method,
                                                       weights=weights,
                                                       labels=[labels[v] for v in sorted(vertex_list)],
@@ -202,8 +233,8 @@ def newman_tree(graph, method, weights=None, labels=None, backup=None):
 
         return cluster2subtree[max(cluster2subtree.keys())]
 
-"""#print newman_tree(karate, backup=lambda)
-plot_comms(karate.community_leading_eigenvector(), vertex_label=range(karate.vcount()))
-t = newman_tree(karate, newman_wrapper, backup=fast_greedy_wrapper)
-print(t)
-myplot(nested2dendro(t, karate), vertex_label=range(karate.vcount()))"""
+if __name__ == "__main__":
+    t = iterative_clustering(karate, newman_wrapper, backup=fast_greedy_wrapper)
+    print(t)
+    myplot(nested2dendro(t, karate), vertex_label=range(karate.vcount()))
+    nested2nexus(t, "cairo_dumps/huh.txt")

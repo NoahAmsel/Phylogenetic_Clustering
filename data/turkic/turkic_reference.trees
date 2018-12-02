@@ -1,0 +1,5 @@
+#NEXUS
+
+begin trees;
+	tree Consensus = ((((Tuvan,Yakut),Khakass),SouthAltaic),(Cuvash,(((Turkish,Turkmen),Karachai),(Tatar,((Kirghiz,Kazakh),Uzbek)))));
+end;

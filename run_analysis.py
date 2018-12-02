@@ -1,22 +1,33 @@
 from igraph_clustering import *
 
-turk_graph = nexus2lang_graph('data/Turkic12langs.nex', inverse_hamming_dist)
-bantu = nexus2lang_graph('./data/Grollemund-et-al_Bantu-database_2015_UTF.nex', inverse_hamming_dist)
+#turk_complete = nexus2lang_graph('data/Turkic12langs.nex', inverse_hamming_dist)
+#bantu_complete = nexus2lang_graph('./data/Grollemund-et-al_Bantu-database_2015_UTF.nex', inverse_hamming_dist)
+pama_complete = nexus2lang_graph('./data/pny/pny_coded.nex', inverse_hamming_dist, taxa=taxa_list('./data/pny/pny_taxa.nex'))
 
-def analyze_language_graph(folder, lang_graph, dist):
+def analyze_language_graph(lang_graph, folder):
+
+
     newman_comms = lang_graph.community_leading_eigenvector(weights='weight')
-    greedy_tree = lang_graph.community_fastgreedy(weights='weight')
-    newman_nested_list = iterative_community_binary(lang_graph)
-    newman_tree = nested2dendro(newman_nested_list,lang_graph)
-    newman_nonbinary = iterative_community(lang_graph)
+    layout = lang_graph.layout_fruchterman_reingold(weights='weight')
+    ig.plot(newman_comms, target=folder+"/comms.png", vertex_color=newman_comms.membership,
+            layout=layout, edge_width=[0.1]*len(newman_comms.graph.es), bbox=(max(600,5*lang_graph.vcount()),max(600,5*lang_graph.vcount())))
 
-    dendro2nexus(greedy_tree, folder+"/greedy_tree.nex")
-    nested2nexus(newman_nested_list, lang_graph.vs['label'], folder+"/newman_tree.nex", ix_shift=1)
-    nested2nexus(newman_nonbinary, lang_graph.vs['label'], folder+"/newman_nonbinary_tree.nex", ix_shift=1)
+    fastgreedy_tree = iterative_clustering(lang_graph, fast_greedy_wrapper, weights='weight', labels='label')
+    nested2nexus(fastgreedy_tree, folder+"/fastgreedy.nex")
 
-    ig.plot(newman_comms, target=folder+"/comms.png", vertex_color=newman_comms.membership, edge_width=[0.1]*len(newman_comms.graph.es))
-    ig.plot(greedy_tree, target=folder+"/greedy_tree.png", orientation="right-left")
-    ig.plot(newman_tree, target=folder+"/newman_tree.png", orientation="right-left")
+    newman_tree = iterative_clustering(lang_graph, newman_wrapper, weights='weight', labels='label')
+    nested2nexus(newman_tree, folder+"/pure_newman.nex")
 
-analyze_language_graph(turk_graph, "trees/turkic")
-analyze_language_graph(bantu, "trees/bantu")
+    newman_tree_betweenness = iterative_clustering(lang_graph, newman_wrapper, weights='weight', labels='label', backup=safe_edge_betweenness_wrapper)
+    nested2nexus(newman_tree_betweenness, folder+"/newman_betweenness.nex")
+    ig.plot(nested2dendro(newman_tree_betweenness, lang_graph, 'label'), bbox=(600, max(600, 10*lang_graph.vcount())),
+            target=folder+"/newman_btwnness.png", orientation="right-left")
+
+    newman_tree_fastgreedy = iterative_clustering(lang_graph, newman_wrapper, weights='weight', labels='label', backup=fast_greedy_wrapper)
+    nested2nexus(newman_tree_fastgreedy, folder+"/newman_fastgreedy.nex")
+    ig.plot(nested2dendro(newman_tree_fastgreedy, lang_graph, 'label'), bbox=(600, max(600, 10*lang_graph.vcount())),
+            target=folder+"/newman_greedy.png", orientation="right-left")
+
+#analyze_language_graph(turk_complete, "trees/turkic")
+#analyze_language_graph(bantu_complete, "trees/bantu")
+analyze_language_graph(pama_complete, "trees/pama_nyungan")
