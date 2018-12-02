@@ -4,6 +4,7 @@ import numpy as np
 import igraph as ig
 from nexus import NexusReader
 from pandas import read_csv
+from sklearn.cluster.bicluster import SpectralCoclustering
 
 def taxa_list(taxa_csv):
     return list(read_csv(taxa_csv)['taxon'])
@@ -15,8 +16,10 @@ def myplot(obj, *args, **kwargs):
 myplot.PLOT_NUM = 1
 
 def plot_comms(clustering, *args, **kwargs):
-    layout = clustering.graph.layout_fruchterman_reingold(weights='weight')
-    myplot(clustering, vertex_color=clustering.membership, layout=layout, *args, **kwargs)
+    weight = 'weight' if 'weight' in clustering.graph.es.attributes() else None
+    if "layout" not in kwargs:
+        kwargs['layout'] = clustering.graph.layout_fruchterman_reingold(weights=weight)
+    myplot(clustering, vertex_color=clustering.membership, *args, **kwargs)
 
 karate = ig.load("karate.gml")
 
@@ -78,6 +81,41 @@ def nexus2lang_graph(nex_file, sim_fun, missing="-", taxa=None):
     chars = nex2char_dict(nex_file, missing=missing, taxa=taxa)
     sims = char_dict2sim_mat(chars, sim_fun)
     return build_lang_graph(sims, chars.keys())
+
+def nex2bipart_graph(nex_file, missing="-", taxa=None):
+    lang2chars = nex2char_dict(nex_file, missing=missing, taxa=taxa)
+
+    """
+    n_langs = len(lang2chars)
+    n_chars = len(lang2chars.values()[0])
+    mat = np.array([v for _, v in lang2chars.iteritems()])
+    adj = np.block([[np.zeros((n_langs, n_langs)), mat], [mat.T, np.zeros((n_chars, n_chars))]])
+    bi = ig.Graph.Adjacency(adj.tolist(), ig.ADJ_MAX)
+    """
+
+    bi = ig.Graph()
+    n_langs = len(lang2chars)
+    n_chars = len(lang2chars.values()[0])
+    lang_labels = lang2chars.keys()
+    bi.add_vertices(lang_labels)
+    bi.add_vertices(["char{0}".format(i) for i in range(n_chars)])
+    bi.vs['label'] = bi.vs['name']
+    bi.vs['type'] = [True]*n_langs + [False]*n_chars
+    for lang in lang2chars.keys():
+        bi.add_edges([(lang, "char{0}".format(i)) for i in np.where(lang2chars[lang])[0]])
+
+    singleton_word = bi.vs.select(_degree = 0)
+    bi.delete_vertices(singleton_word)
+    return bi, lang_labels
+
+# DO NOT DELETE THIS
+ig.Graph.n_langs = lambda self: sum(self.vs['type'])
+ig.Graph.n_chars = lambda self: self.vcount()-sum(self.vs['type'])
+
+def get_bipart_mat(bi):
+    mat = np.array(bi.get_adjacency(type=ig.GET_ADJACENCY_UPPER).data)
+    return mat[:bi.n_langs(), bi.n_langs():]
+
 
 def dendro2nexus(dendro, file):
     """
@@ -153,6 +191,22 @@ def nested2dendro(nested, graph, label):
     helper(nested)
     return ig.VertexDendrogram(graph, nested2dendro.merges)
 
+def prune_nested(nested, good_labels):
+    if not hasattr(nested, '__iter__'):
+        return nested if nested in good_labels else None
+    else:
+        pruned = []
+        for x in nested:
+            xp = prune_nested(x, good_labels)
+            if xp is not None:
+                pruned.append(xp)
+        if len(pruned) == 0:
+            return None
+        elif len(pruned) == 1:
+            return pruned[0]
+        else:
+            return tuple(pruned)
+
 def fast_greedy_wrapper(graph, weights=None):
     dendro = graph.community_fastgreedy(weights=weights)
     return list(range(graph.vcount())), dendro.merges
@@ -166,6 +220,19 @@ def safe_edge_betweenness_wrapper(graph, weights=None):
         return fast_greedy_wrapper(graph, weights=weights)
     else:
         return edge_betweenness_wrapper(graph, weights=weights)
+
+def coclustering_wrapper(graph, weights=None):
+    X = get_bipart_mat(graph)
+    if X.shape[0] <= 1:
+        return [], []
+    elif X.shape[0] == 2:
+        return [0,1], [(0,1)]
+    else:
+        clustering = SpectralCoclustering(n_clusters=2, random_state=0).fit(X)
+        row_labels = list(clustering.row_labels_)
+        if max(row_labels)-min(row_labels) == 0:
+            return [], []
+        return row_labels + list(clustering.column_labels_), [(0,1)]
 
 def newman_wrapper(graph, weights=None, arpack_options=None):
     """
@@ -186,7 +253,7 @@ def iterative_clustering(graph, method, weights=None, labels=None, backup=None):
     method and backup are functions that take a graph and an optional
     weights parameter and return a nested list
     """
-    if isinstance(weights, basestring):
+    if weights is None or isinstance(weights, basestring):
         #weights = graph.es[weights]
         pass
     else:
@@ -196,7 +263,7 @@ def iterative_clustering(graph, method, weights=None, labels=None, backup=None):
     if labels is None:
         labels = [str(i) for i in range(graph.vcount())]
     assert len(labels) == graph.vcount()
-
+    
     # base case
     if graph.vcount() == 1:
         return labels[0]
@@ -228,7 +295,7 @@ def iterative_clustering(graph, method, weights=None, labels=None, backup=None):
 
         next_inner_node_ix = max(cluster2subtree.keys())+1
         for left, right in merges:
-            cluster2subtree[next_inner_node_ix] = [cluster2subtree[left], cluster2subtree[right]]
+            cluster2subtree[next_inner_node_ix] = (cluster2subtree[left], cluster2subtree[right])
             next_inner_node_ix += 1
 
         return cluster2subtree[max(cluster2subtree.keys())]
