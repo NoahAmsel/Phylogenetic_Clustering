@@ -51,6 +51,11 @@ def inverse_hamming_dist(a,b):
     else:
         return float(present_features)/unshared_features
 
+def shared_sim(a,b):
+    #assumes we're getting np.arrays
+    assert a.shape == b.shape
+    return np.nansum(a*b)
+
 def char_dict2sim_mat(char_dict, sim_fun):
     n = len(char_dict)
     similarities = np.zeros((n,n))

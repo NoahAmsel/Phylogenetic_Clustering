@@ -1,0 +1,4 @@
+#NEXUS
+Begin trees;
+		tree Dendrogram = (Turkish,Uzbek,Cuvash,Karachai,Tatar,Khakass,SouthAltaic,Tuvan,Yakut,Kazakh,Kirghiz,Turkmen);
+end;
