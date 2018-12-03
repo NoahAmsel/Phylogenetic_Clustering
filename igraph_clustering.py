@@ -237,6 +237,18 @@ def coclustering_wrapper(graph, weights=None):
             return [], []
         return row_labels + list(clustering.column_labels_), [(0,1)]
 
+def newman_unresolved_wrapper(graph, weights=None, arpack_options=None):
+    """
+    Same as community_leading_eigenvector method of graph,
+    but modified to return the merge history
+    return is tuple of membership list, merge history (where numbers are the cluster numbers)
+    """
+    cl = graph.community_leading_eigenvector(weights=weights)
+    if max(cl.membership)==0:
+        return cl.membership, []
+    else:
+        return cl.membership, [tuple(range(len(cl.subgraphs())))]
+
 def newman_wrapper(graph, weights=None, arpack_options=None):
     """
     Same as community_leading_eigenvector method of graph,
@@ -306,11 +318,40 @@ def iterative_clustering(graph, method, weights=None, labels=None, backup=None):
                                                       backup=backup)
 
         next_inner_node_ix = max(cluster2subtree.keys())+1
-        for left, right in merges:
-            cluster2subtree[next_inner_node_ix] = (cluster2subtree[left], cluster2subtree[right])
+        for merge_these in merges:
+            cluster2subtree[next_inner_node_ix] = tuple(cluster2subtree[child] for child in merge_these)
             next_inner_node_ix += 1
 
         return cluster2subtree[max(cluster2subtree.keys())]
+
+## UNSAFE; DEPRECATED
+def iterative_community_binary(graph):
+    if len(graph.vs)==1:
+        return graph.vs['id'][0]
+
+    if 'id' not in graph.vs.attributes():
+        graph.vs['id'] = list(range(1,1+len(graph.vs)))
+    w = 'weight' if 'weight' in graph.es.attributes() else None
+    cl = graph.community_leading_eigenvector(weights=w, clusters=2)
+    if len(cl.subgraphs())==1:
+        cl = graph.community_fastgreedy(weights=w).as_clustering(n=2)
+    return [iterative_community_binary(sub) for sub in cl.subgraphs()]
+
+## UNSAFE; DEPRECATED
+def iterative_community(graph, clusters=None):
+    if 'id' not in graph.vs.attributes():
+        graph.vs['id'] = list(range(1,1+len(graph.vs)))
+    w = 'weight' if 'weight' in graph.es.attributes() else None
+    cl = graph.community_leading_eigenvector(weights=w, clusters=clusters)
+    if len(cl.subgraphs())==1:
+        if len(graph.vs)==1:
+            return graph.vs['id'][0]
+        else:
+            return graph.vs['id']
+    else:
+        return [iterative_community(sub, clusters=clusters) for sub in cl.subgraphs()]
+
+
 
 if __name__ == "__main__":
     t = iterative_clustering(karate, newman_wrapper, backup=fast_greedy_wrapper)
