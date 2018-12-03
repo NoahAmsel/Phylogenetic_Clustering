@@ -14,6 +14,8 @@ bantu data https://github.com/D-PLACE/dplace-data/tree/master/phylogenies/grolle
 
 biclustering https://scikit-learn.org/stable/modules/biclustering.html
 
+https://en.wikipedia.org/wiki/Quantitative_comparative_linguistics#History
+
 PNY data: ran the perl script on the tsv she sent. also had to convert the whole file to UTF-8 encoding and
 correct some mis-capitalized labels (that created mismatches with the reference tree)
 
