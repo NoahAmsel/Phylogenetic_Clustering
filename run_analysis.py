@@ -13,6 +13,9 @@ def analyze_language_graph(lang_graph, folder):
     newman_tree = iterative_clustering(lang_graph, newman_wrapper, weights='weight', labels='label')
     nested2nexus(newman_tree, folder+"/pure_newman.nex")
 
+    newman_nonbinary_tree = iterative_clustering(lang_graph, newman_unresolved_wrapper, weights='weight', labels='label')
+    nested2nexus(newman_nonbinary_tree, folder+"/newman_nonbinary.nex")
+
     newman_tree_betweenness = iterative_clustering(lang_graph, newman_wrapper, weights='weight', labels='label', backup=safe_edge_betweenness_wrapper)
     nested2nexus(newman_tree_betweenness, folder+"/newman_betweenness.nex")
     ig.plot(nested2dendro(newman_tree_betweenness, lang_graph, 'label'), bbox=(600, max(600, 10*lang_graph.vcount())),

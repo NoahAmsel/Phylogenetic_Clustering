@@ -21,8 +21,6 @@ def plot_comms(clustering, *args, **kwargs):
         kwargs['layout'] = clustering.graph.layout_fruchterman_reingold(weights=weight)
     myplot(clustering, vertex_color=clustering.membership, *args, **kwargs)
 
-karate = ig.load("karate.gml")
-
 # returns dictionary where values are lists of strings
 def nex2char_dict(nex_file, missing="-", taxa=None):
     n = NexusReader()
