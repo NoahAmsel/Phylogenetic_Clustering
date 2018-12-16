@@ -1,0 +1,128 @@
+---
+title: "Top-down vs. Bottom-up"
+author: "Gabe Dolsten, collaborating with Noah Amsel"
+date: "9/19/2018"
+output:
+  pdf_document: default
+  word_document: default
+number_sections: yes
+geometry: margin=1in
+fontsize: 11pt
+---
+
+```{r setup, include=FALSE}
+library(lattice)
+library(ape)
+library(geiger)
+library(phangorn)
+library(phytools)
+library(phyloclim)
+library(coda)
+```
+
+
+```{r, warning=FALSE}
+original <- read.tree(file="turkic/data/tree.tre", text = NULL, tree.names = NULL, skip = 0, comment.char = "", keep.multi = FALSE)
+nexus_data <- read.nexus.data(file = "turkic/data/data.nex")
+plot(original)
+```
+
+```{r, warning=FALSE}
+
+#To remove extra data for Pama-Nyungan <- RUN ONLY FOR PAMA-NYUNGAN
+lengthOfOriginal <- length(original$tip.label)
+for(n in 1:lengthOfOriginal){
+  if (!original$tip.label[n] %in% labels_PNY){
+    print(original$tip.label[n])
+  }
+}
+
+lengthOfPNY <- length(nexus_data)
+count = 0;
+  count =  count + 1
+  for(n in 1:lengthOfPNY){
+    if (!labels(nexus_data)[n] %in% original$tip.label){
+      nexus_data[n] <- NULL
+      count=0
+    }
+  }
+  nexus_data <- nexus_data[-(which(sapply(nexus_data,is.null),arr.ind=TRUE))]
+print(length(labels(nexus_data)))
+```
+
+
+```{r, warning=FALSE}
+phyDat <- phyDat(as.data.frame(nexus_data), type="USER", levels=c(0,1), ambiguity="-")
+dist_matrix <- dist.hamming(phyDat)
+tree_upgma <- upgma(dist_matrix)
+tree_nj <- NJ(dist_matrix)
+
+# FOR BANTU ONLY (DISCREPANCIES BETWEEN NEXUS)
+# tree_upgma$tip.label <- gsub("\\.","-",tree_upgma$tip.label)
+# tree_upgma$tip.label <- gsub("X\\-","*",tree_upgma$tip.label)
+# 
+# tree_nj$tip.label <- gsub("\\.","-",tree_nj$tip.label)
+# tree_nj$tip.label <- gsub("X\\-","*",tree_nj$tip.label)
+
+# FOR TURKIC ONLY (DISCREPANCIES BETWEEN NEXUS)
+tree_upgma$tip.label <- gsub("\\*","",tree_upgma$tip.label)
+tree_upgma$tip.label <- gsub("X\\.","",tree_upgma$tip.label)
+tree_upgma$tip.label <- gsub("\\.","",tree_upgma$tip.label)
+
+tree_nj$tip.label <- gsub("\\*","",tree_nj$tip.label)
+tree_nj$tip.label <- gsub("X\\.","",tree_nj$tip.label)
+tree_nj$tip.label <- gsub("\\.","",tree_upgma$tip.label)
+```
+
+```{r, warning=FALSE}
+filesnames <- c("fastgreedy.nex","newman_betweenness.nex","newman_fastgreedy.nex","newman_nonbinary.nex","pure_newman.nex","bipartite/bi_coclustering_greedy.nex","bipartite/bi_newman_fastgreedy.nex","bipartite/bi_pure_coclustering.nex")
+length <- length(filesnames)
+path <- "turkic/"
+
+filesnames <- c(filesnames)
+```
+
+```{r, warning=FALSE}
+tips = length(original$tip.label)
+
+random_tree_1 <- rtree(tips,tip.label=original$tip.label)
+random_tree_2 <- rtree(tips,tip.label=original$tip.label)
+
+for(i in 1:length(filesnames)){
+  filepath_i <- paste0(path,filesnames[i])
+  tree_i <- read.nexus(file=filepath_i)
+  print(paste0(filesnames[i], " vs original"))
+  print(dist.topo(tree_i,original))
+  plot(tree_i,main=filesnames[i])
+
+}
+print("original vs UPGMA")
+print(dist.topo(original,tree_upgma))
+print("original vs NJ")
+print(dist.topo(original,tree_nj))
+print("UPGMA vs NJ")
+print(dist.topo(tree_upgma,tree_nj))
+print("original vs RANDOM")
+print(dist.topo(original,random_tree_1))
+dist.topo(original,random_tree_1)
+
+plot(random_tree_1,main="random")
+plot(tree_upgma,main="upgma")
+plot(tree_nj , main = "nj")
+plot(original,main = "original")
+```
+
+```{r, warning=FALSE}
+
+# To test if labels are correct (after reading the NEX files, some taxa were labelled incorrectly)
+labels <- tree_upgma$tip.label
+
+print(labels)
+for(n in 1:tips){
+  if (!tips(original,n) %in% labels){
+    print(tips(original,n))
+  }
+}
+
+```
+
