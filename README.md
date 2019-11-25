@@ -1,7 +1,7 @@
 # Phylogenetic_Clustering
+This repo was created for my and Gabe Dolsten's final project for Linguistics 219, Evolution of Language and Culture. We experimented with various non-traditional ways of doing hierarchical clustering to produce evolutionary trees for families of languages. Our methods and experiments are described in detail in our paper, a PDF of which is included in this repo.
 
-
-
+### Detrius
 Resources to get Cairo working
 https://www.cairographics.org/download/
 https://stackoverflow.com/questions/12072093/python-igraph-plotting-not-available -- i followed the bottom answer
